@@ -9,8 +9,8 @@ class Robot:
         self.forearm = Segment(length=forearm[0], servoDegs=forearm[1])
         self.wrist = Segment(length=wrist[0], servoDegs=wrist[1])
 
-        self.minRadius = bicep.length - cos(forearm.maxAngle - 90) # Closest arm can move to itself.
-        self.maxRadius = bicep.length + forearm.length # Radius of half-circle arm can make
+        self.minRadius = self.bicep.length - cos(self.forearm.maxAngle - 90) # Closest arm can move to itself.
+        self.maxRadius = self.bicep.length + self.forearm.length # Radius of half-circle arm can make
 
 
     def calculate_bicep_move_to_final(self, newCoords):
@@ -39,13 +39,18 @@ class Robot:
     def curr_forearm_pos(self):
         return p2d(self.bicep.length * cos(self.bicep.angle), self.bicep.length * sin(self.bicep.angle))
 
+    def curr_bicep_pos(self):
+        return p2d(self.bicep.length*cos(self.bicep.angle), self.bicep.length*sin(self.bicep.angle))
+
     def move_robot(self, newX, newY):
         newCoords = p2d(newX, newY)
-        
+
         newBicepPosition = self.calculate_bicep_move_to_final(newCoords)
+        
         self.bicep.setServoAngle(newBicepPosition)
 
         newForearmPosition = self.calculate_forearm_move_to_final(newCoords)
+        # print(newForearmPosition)
         self.forearm.setServoAngle(newForearmPosition)
 
 
