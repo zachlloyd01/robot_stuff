@@ -5,7 +5,7 @@ class Segment:
     '''
     def __init__(self, length, servoDegs):
         self.length = length
-        self.angle = 0.0
+        self.angle = 90.0
         self.maxAngle = servoDegs / 2
 
     def setServoAngle(self, newAngle):
